@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/sitemap.xml
