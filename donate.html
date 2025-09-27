@@ -6,28 +6,52 @@
   <title>Donate — Paws & Smile Foundation</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
+    body {
+      background: #0f141c;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .section {
+      padding: 60px 20px;
+    }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .card {
+      background: #1a2230;
+      padding: 20px;
+      border-radius: 14px;
+    }
     .qr-box {
       text-align: center;
       padding: 20px;
-      border: 1px solid #ddd;
+      border: 1px solid #333;
       border-radius: 14px;
-      background: #fff;
+      background: #1a2230;
       margin-top: 20px;
     }
+    .qr-box h3 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
     .qr-box img {
-      max-width: 250px;
+      max-width: 220px;
       border-radius: 12px;
-      border: 2px solid #1a2230;
+      border: 2px solid #fff;
     }
     .qr-box p {
       margin-top: 10px;
       font-weight: bold;
+      color: #fff;
     }
     .donate-btn {
       display: inline-block;
       margin-top: 15px;
       padding: 12px 22px;
-      background: #1a2230;
+      background: #4CAF50;
       color: #fff;
       font-weight: bold;
       text-decoration: none;
@@ -35,11 +59,12 @@
       transition: 0.3s ease;
     }
     .donate-btn:hover {
-      background: #444;
+      background: #43a047;
     }
   </style>
 </head>
 <body>
+
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html">Paws &amp; Smile Foundation</a>
@@ -55,29 +80,42 @@
 
 <section class="section">
   <div class="container grid2">
+    
+    <!-- Left Side -->
     <div>
       <h2>Donate</h2>
       <p class="lead">Your gift funds food, medicine, and life-saving care. You can donate directly using UPI or by contacting us via email.</p>
       
+      <!-- Email Donate -->
       <div class="card">
         <p><strong>Quick donate via email:</strong></p>
-        <p><a class="btn" href="mailto:pawsandsmilefoundation@gmail.com?subject=I want to donate to Paws and Smile Foundation">Email us to Donate</a></p>
+        <p>
+          <a class="donate-btn" href="mailto:pawsandsmilefoundation@gmail.com?subject=I want to donate to Paws and Smile Foundation">
+            Email us to Donate
+          </a>
+        </p>
         <p class="muted">Prefer UPI/bank transfer? Use the QR code below.</p>
       </div>
 
-      <!-- QR Code Donation Section -->
+      <!-- QR Donation -->
       <div class="qr-box">
         <h3>Scan & Donate</h3>
         <img src="assets/images/qr.jpeg" alt="Paws & Smile UPI QR">
-        <p>UPI ID: <br><span style="color:#1a2230;">pawsandsmile@ptyes</span></p>
-        <!-- UPI Button -->
-        <a class="donate-btn" href="upi://pay?pa=pawsandsmile@ptyes&pn=Paws%20and%20Smile%20Foundation&cu=INR&tn=Donation%20to%20Paws%20and%20Smile%20Foundation">
+        <p>UPI ID: <span style="color:#4CAF50;">pawsandsmile@ptyes</span></p>
+        <a class="donate-btn" 
+           href="upi://pay?pa=pawsandsmile@ptyes&pn=Paws%20and%20Smile%20Foundation&cu=INR&tn=Donation%20to%20Paws%20and%20Smile%20Foundation">
           Donate Now
         </a>
       </div>
-
     </div>
-    <figure class="card"><img src="assets/images/bg1.jpg" alt="Street dogs" style="width:100%;height:100%;object-fit:cover;border-radius:14px;border:1px solid #1a2230"></figure>
+
+    <!-- Right Side Image -->
+    <figure class="card">
+      <img src="assets/images/bg1.jpg" 
+           alt="Street dogs" 
+           style="width:100%;height:100%;object-fit:cover;border-radius:14px;">
+    </figure>
+
   </div>
 </section>
 
@@ -99,7 +137,6 @@
   </div>
   <div class="container tiny muted">© Pawsandsmilefoundation — All rights reserved.</div>
 </footer>
-<script src="assets/js/main.js"></script>
 
 </body>
 </html>
