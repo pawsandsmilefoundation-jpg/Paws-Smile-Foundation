@@ -1,102 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paws and Smile Foundation</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-    .hero {
-      position: relative;
-      text-align: center;
-      color: white;
-      padding: 120px 20px;
-    }
-    .bg-cover {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-size: cover;
-      background-position: center;
-      opacity: 0.6;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 12px 22px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: transform 0.2s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-    }
-    .donate-btn {
-      background: #1e90ff;
-      color: #fff;
-    }
-    .donate-btn:hover {
-      background: #0d6efd;
-    }
-    .outline {
-      border: 2px solid white;
-      color: white;
-      background: transparent;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="google-site-verification" content="olxpk_gnEG8pfYBdd3J6XWyy-RE-VoAULebeE0mVBCs" />
 
-    /* Dog SVG size */
-    .dog-icon {
-      width: 32px;
-      height: 32px;
-    }
-    /* Tail wagging animation */
-    .dog-tail {
-      transform-origin: left center;
-      animation: wag 0.5s infinite alternate ease-in-out;
-    }
-    @keyframes wag {
-      from { transform: rotate(15deg); }
-      to   { transform: rotate(-15deg); }
-    }
+  <!-- Title & Description -->
+  <title>Paws and Smile Foundation – Compassion in Action</title>
+  <meta name="description" content="Paws and Smile Foundation – NGO for street animal rescue, feeding, vaccination, adoption and humane education.">
+  <meta name="keywords" content="Paws and Smile Foundation, Animal Help, Stray Dogs, Animal Shelter, Pet Adoption, NGO">
+  <meta name="author" content="Paws and Smile Foundation">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Paws and Smile Foundation – Compassion in Action">
+  <meta property="og:description" content="Helping stray and needy animals with love, care, and shelter.">
+  <meta property="og:image" content="https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/assets/images/logo.png">
+  <meta property="og:url" content="https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Paws and Smile Foundation">
+  <meta name="twitter:description" content="Helping stray and needy animals with love, care, and shelter.">
+  <meta name="twitter:image" content="https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/assets/images/logo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/images/logo.png">
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Paws and Smile Foundation",
+    "alternateName": "Paws & Smile",
+    "url": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/",
+    "logo": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/assets/images/logo.png",
+    "founder": {
+      "@type": "Person",
+      "name": "Tanush Kumar",
+      "telephone": "+91-8700239344",
+      "email": "pawsandsmilefoundation@gmail.com"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-8700239344",
+      "contactType": "Customer Service",
+      "email": "pawsandsmilefoundation@gmail.com"
+    },
+    "sameAs": [
+      "https://www.facebook.com/",
+      "https://www.instagram.com/",
+      "https://www.twitter.com/"
+    ]
+  }
+  </script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Custom Donate Button Animation -->
+  <style>
+  /* Donate button style */
+  .donate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 22px;
+    border-radius: 8px;
+    background: #1e90ff;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .donate-btn:hover {
+    transform: scale(1.05);
+    background: #0d6efd;
+  }
+
+  /* Dog emoji animation (wagging tail effect) */
+  .dog {
+    display: inline-block;
+    animation: wag 0.6s infinite alternate ease-in-out;
+  }
+
+  @keyframes wag {
+    0% { transform: rotate(0deg) translateX(0); }
+    50% { transform: rotate(20deg) translateX(2px); }
+    100% { transform: rotate(-20deg) translateX(-2px); }
+  }
   </style>
 </head>
-<body>
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="bg-cover" style="background-image:url('assets/images/bg1.jpg');"></div>
-    <div class="container content">
-      <h1>Because every street deserves a wagging tail.</h1>
-      <p class="lead">Rescue. Feed. Heal. Educate. Together we make streets safer for animals and kinder for people.</p>
-      
-      <!-- Donate Button with SVG Dog -->
-      <a href="donate.html" class="btn donate-btn">
-        Donate 
-        <svg class="dog-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Dog Body -->
-          <circle cx="32" cy="32" r="18" fill="#8B4513"/>
-          <!-- Ear -->
-          <ellipse cx="20" cy="25" rx="6" ry="8" fill="#5C3317"/>
-          <!-- Eye -->
-          <circle cx="28" cy="30" r="3" fill="white"/>
-          <circle cx="28" cy="30" r="1.5" fill="black"/>
-          <!-- Nose -->
-          <circle cx="38" cy="36" r="3" fill="black"/>
-          <!-- Tail -->
-          <rect class="dog-tail" x="47" y="28" width="12" height="4" rx="2" fill="#8B4513"/>
-        </svg>
-      </a>
 
-      <a href="#programs" class="btn outline" style="margin-left:10px">Our Work</a>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <!-- Logo -->
+    <a href="index.html">
+      <img src="assets/images/logo.png" alt="Paws and Smile Logo" style="height:80px; width:80px; vertical-align:middle;">
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="donate.html" class="btn small">Donate</a>
+      <a href="contact.html" class="btn small outline">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="bg-cover" style="background-image:url('assets/images/bg1.jpg');"></div>
+  <div class="container content">
+    <h1>Because every street deserves a wagging tail.</h1>
+    <p class="lead">Rescue. Feed. Heal. Educate. Together we make streets safer for animals and kinder for people.</p>
+    
+    <!-- Donate button with dog wagging tail -->
+    <a href="donate.html" class="btn donate-btn">
+      Donate <span class="dog">🐶</span>
+    </a>
+
+    <a href="#programs" class="btn outline" style="margin-left:10px">Our Work</a>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="container">
+    <h2>Who we are</h2>
+    <p class="lead">Paws and Smile Foundation is a community-driven NGO dedicated to the dignity, safety, and wellbeing of India’s street animals—while supporting the children and families who care for them. We rescue injured animals, run feeding and vaccination drives, facilitate adoptions, and deliver humane education in schools and underserved neighborhoods. Our model is simple: compassion scales when people have the knowledge, tools, and support to act. From late-night rescues and emergency vet transport to spay–neuter programs and awareness workshops, our teams meet animals where they are and involve local guardians in every step. By partnering with volunteers, veterinary professionals, and municipal bodies, we reduce suffering, prevent the spread of disease, and build kinder streets where people and animals thrive together. Every rupee you donate fuels medicine, meals, and on-the-ground action—turning everyday kindness into lasting change.</p>
+  </div>
+</section>
+
+<section id="programs" class="section">
+  <div class="container">
+    <h2>What we do</h2>
+    <div class="grid3">
+      <div class="card">
+        <h3>Rescue &amp; Treatment</h3>
+        <p>Emergency response for injured animals, vet transport, medicines and post-care with community fosterers.</p>
+      </div>
+      <div class="card">
+        <h3>Feeding &amp; Vaccination</h3>
+        <p>Regular feeding routes, anti-rabies vaccinations and deworming to build healthier street dog populations.</p>
+      </div>
+      <div class="card">
+        <h3>Adoption &amp; Education</h3>
+        <p>Responsible adoptions, school workshops and compassionate community training for sustainable impact.</p>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<section id="impact" class="section">
+  <div class="container grid2">
+    <figure class="card"><img src="assets/images/bg2.jpg" alt="Street dogs being fed" style="width:100%;height:320px;object-fit:cover;border-radius:14px;border:1px solid #1a2230"></figure>
+    <div>
+      <h2>Impact you can feel</h2>
+      <p class="lead">In the last year our volunteers delivered thousands of meals, rescued critical cases, and helped communities learn humane practices. Your support keeps the wheels turning.</p>
+      <a href="about.html" class="btn">Learn more</a>
+      <a href="contact.html" class="btn outline" style="margin-left:10px">Volunteer</a>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="section">
+  <div class="container card">
+    <h2>Ready to help?</h2>
+    <p class="lead">A small act of kindness today becomes someone’s second chance tomorrow.</p>
+    <div class="actions">
+      <a class="btn" href="donate.html">Donate</a>
+      <a class="btn outline" href="contact.html">Partner with us</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container grid3">
+    <div>
+      <h4>Paws &amp; Smile Foundation</h4>
+      <p>Compassion in action for street animals and the communities who love them.</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p><strong>Phone:</strong> +91-8700239344<br>
+      <strong>Email:</strong> <a href="mailto:pawsandsmilefoundation@gmail.com">pawsandsmilefoundation@gmail.com</a></p>
+    </div>
+     <div>
+      <h4>JOIN WHATSAPP GROUP</h4>
+        </p> <strong>WHATSAPP:</strong> <a href="https://chat.whatsapp.com/IQJds0I1c8p5TszA7hDlGY?mode=ems_share_t">https://chat.whatsapp.com/IQJds0I1c8p5TszA7hDlGY?mode=ems_share_t</p>
+         </p> <strong>INSTAGRAM:</strong> <a href="https://www.instagram.com/paws.and.smile.fondation?igsh=dTZ5amw4dHl6czBr">https://www.instagram.com/paws.and.smile.fondation?igsh=dTZ5amw4dHl6czBr</p>
+          <div>
+   </div>
+  <div class="container tiny muted">© Pawsandsmilefoundation — All rights reserved.</div>
+</footer>
+
+<script src="assets/js/main.js"></script>
 </body>
 </html>
