@@ -50,22 +50,60 @@
       color: #fff;
     }
 
-    /* 🐾 Paw Shape Donate Button */
-    .donate-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 14px 28px;
-      background: #4CAF50;
-      color: #fff;
+    /* Paw Donate Button */
+    .paw-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 20px;
       font-weight: bold;
       text-decoration: none;
+      background: #4CAF50;
+      color: #fff;
+      border-radius: 50px;
+      padding: 18px 30px;
+      margin: 12px 8px;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .paw-btn:hover {
+      background: #43a047;
+      transform: scale(1.05);
+    }
+    .paw-icon {
+      font-size: 26px;
+    }
+
+    /* Custom amount box */
+    .custom-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #111822;
+      border-radius: 14px;
+    }
+    .custom-box input {
+      padding: 12px;
+      border-radius: 8px;
       border: none;
+      font-size: 18px;
+      width: 150px;
+      margin-right: 10px;
+      text-align: center;
+    }
+    .custom-box button {
+      padding: 14px 26px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      background: #ff9800;
+      color: #fff;
       cursor: pointer;
       transition: 0.3s ease;
-      clip-path: path("M30 10c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm-14 8c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7zm28 0c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7zM20 34c-6 0-11 5-11 11s5 11 11 11h20c6 0 11-5 11-11s-5-11-11-11H20z");
     }
-    .donate-btn:hover {
-      background: #43a047;
+    .custom-box button:hover {
+      background: #e68900;
       transform: scale(1.05);
     }
 
@@ -119,22 +157,31 @@
       <h2>Donate</h2>
       <p class="lead">Your gift funds food, medicine, and life-saving care. You can donate directly using UPI or by contacting us via email.</p>
         
-      <!-- Email Donate -->
-      <div class="card">
-        <p><strong>Quick donate via email:</strong></p>
-        <p>
-          <a class="donate-btn" href="mailto:pawsandsmilefoundation@gmail.com?subject=I want to donate to Paws and Smile Foundation">
-            Email us to Donate
-          </a>
-        </p>
-        <p class="muted">Prefer UPI/bank transfer? Use the QR code below.</p>
-      </div>
-
       <!-- QR Donation -->
       <div class="qr-box">
-        <h3>Scan & Donate</h3>
+        <h3>Quick Donate</h3>
         <img src="assets/images/qr.jpeg" alt="Paws & Smile UPI QR">
-        <p>UPI ID: <span style="color:#4CAF50;">pawsandsmile@ptyes</span></p>
+        <p>UPI ID: <span style="color:#4CAF50;">8700239344@ybl</span></p>
+
+        <!-- Paw Donate Buttons -->
+        <a class="paw-btn" href="upi://pay?pa=8700239344@ybl&pn=Paws%20Smile%20Foundation&am=20&cu=INR">
+          <span class="paw-icon">🐾</span> ₹20
+        </a>
+        <a class="paw-btn" href="upi://pay?pa=8700239344@ybl&pn=Paws%20Smile%20Foundation&am=50&cu=INR">
+          <span class="paw-icon">🐾</span> ₹50
+        </a>
+        <a class="paw-btn" href="upi://pay?pa=8700239344@ybl&pn=Paws%20Smile%20Foundation&am=100&cu=INR">
+          <span class="paw-icon">🐾</span> ₹100
+        </a>
+        <a class="paw-btn" href="upi://pay?pa=8700239344@ybl&pn=Paws%20Smile%20Foundation&am=200&cu=INR">
+          <span class="paw-icon">🐾</span> ₹200
+        </a>
+
+        <!-- Custom Amount -->
+        <div class="custom-box">
+          <input type="number" id="customAmount" placeholder="Enter amount" min="1" />
+          <button onclick="customDonate()">Donate 🐾</button>
+        </div>
       </div>
     </div>
 
@@ -159,11 +206,23 @@
     </div>
     <div>
      <h4>JOIN WHATSAPP GROUP</h4>
-     <p><strong>WHATSAPP:</strong> <a href="https://chat.whatsapp.com/IQJds0I1c8p5TszA7hDlGY?mode=ems_share_t">Join Here</a></p>
+     <p><strong>WHATSAPP:</strong> <a href="https://chat.whatsapp.com/IQJds0I1c8p5TszA7hDlGY?mode=ems_share_t">Join Now</a></p>
     </div>
   </div>
   <div class="container tiny muted">© Pawsandsmilefoundation — All rights reserved.</div>
 </footer>
+
+<script>
+  function customDonate() {
+    const amount = document.getElementById("customAmount").value;
+    if (amount && amount > 0) {
+      const upiLink = `upi://pay?pa=8700239344@ybl&pn=Paws%20Smile%20Foundation&am=${amount}&cu=INR`;
+      window.location.href = upiLink;
+    } else {
+      alert("Please enter a valid amount!");
+    }
+  }
+</script>
 
 </body>
 </html>
