@@ -26,3 +26,17 @@ if(form){
     window.location.href = `mailto:${form.dataset.email}?subject=New message from website&body=${encodeURIComponent(body)}`;
   });
 }
+const qrContainer = document.getElementById('qrContainer');
+// Generate second (member) QR code — small QR near name
+const memberQrContainer = document.getElementById('memberQr');
+memberQrContainer.innerHTML = '';
+const smallCanvas = document.createElement('canvas');
+smallCanvas.width = 60;
+smallCanvas.height = 60;
+new QRious({
+  element: smallCanvas,
+  value: 'Member: ' + memberName + ' | Verified Link: ' + (id ? (BASE_CERT_URL + '?id=' + id) : BASE_CERT_URL),
+  size: 60,
+  level: 'H'
+});
+memberQrContainer.appendChild(smallCanvas);
