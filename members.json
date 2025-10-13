@@ -1,0 +1,16 @@
+{
+  "tanush123": {
+    "name": "Tanush Kumar",
+    "workshop": "Animal Awareness Camp",
+    "date": "10 Oct 2025",
+    "certificate_url": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/certificates/Certificate - Tanush Kumar.pdf",
+    "note": "Issued by Paws & Smile Foundation"
+  },
+  "riya456": {
+    "name": "Riya Sharma",
+    "workshop": "Pet Care Workshop",
+    "date": "5 Nov 2025",
+    "certificate_url": "",
+    "note": "Issued by Paws & Smile Foundation"
+  }
+}
