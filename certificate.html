@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paws & Smile Foundation | Certificate</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      height: 100vh;
+    }
+    #certificate {
+      position: relative;
+      width: 900px;
+      max-width: 95%;
+    }
+    #bg {
+      width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .name {
+      position: absolute;
+      top: 52%; /* adjust according to where name should appear */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 42px;
+      color: #5a2b1b;
+      font-weight: 700;
+      text-align: center;
+      width: 100%;
+    }
+    .btns {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="certificate">
+    <img id="bg" src="assets/certificate-bg.jpg" alt="certificate background" />
+    <div class="name" id="nameField">Volunteer Name</div>
+  </div>
+
+  <div class="btns">
+    <button id="downloadPng">Download PNG</button>
+  </div>
+
+  <!-- HTML2Canvas for image generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    // Get 'name' from URL query
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name") || "Volunteer Name";
+
+    // Set name on certificate
+    document.getElementById("nameField").innerText = name;
+
+    // Download PNG
+    document.getElementById("downloadPng").addEventListener("click", async () => {
+      const canvas = await html2canvas(document.getElementById("certificate"), { scale: 2 });
+      const link = document.createElement("a");
+      link.download = name + "-certificate.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  </script>
+</body>
+</html>
