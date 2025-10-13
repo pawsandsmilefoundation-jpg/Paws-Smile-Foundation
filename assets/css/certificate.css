@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+#certificate {
+  position: relative;
+  display: inline-block;
+}
+
+#bg {
+  width: 1000px;
+  height: auto;
+  display: block;
+}
+
+#memberName {
+  position: absolute;
+  top: 420px;       /* adjust as per your design */
+  left: 300px;      /* adjust as per your design */
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+#memberQr {
+  position: absolute;
+  top: 410px;       /* small QR near name */
+  left: 750px;      /* adjust as per design */
+}
+
+#qrContainer {
+  position: absolute;
+  bottom: 80px;     /* optional — your main large QR position */
+  right: 80px;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  background: #0b5ed7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0847a5;
+}
