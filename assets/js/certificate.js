@@ -6,7 +6,7 @@ function getQueryParam(param) {
 }
 
 const memberName = getQueryParam("name") || "Volunteer Name";
-const memberId = getQueryParam("id") || "PSF000";
+const memberId = getQueryParam("id") || "PAWS01";
 const BASE_CERT_URL = window.location.origin + window.location.pathname;
 
 // 1️⃣ Set Member Name
