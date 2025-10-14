@@ -1,89 +1,26 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Certificate - Paws & Smile Foundation</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
-  <!-- html2canvas and jsPDF from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Volunteer Certificate</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="card center">
-      <h2>Paws & Smile Foundation — Certificate Viewer</h2>
-      <div id="result" class="small">Loading...</div>
-      <div id="cert-area" class="center" style="display:none;">
-        <img src="certificate-bg.jpg" class="cert-bg" alt="certificate background">
-        <div class="cert-text cert-workshop" id="workshop"></div>
-        <div class="cert-text cert-name" id="name"></div>
-        <div class="cert-text cert-date" id="date"></div>
-        <div class="qr-box" id="qr"></div>
-      </div>
-      <div id="actions" style="display:none; margin-top:12px;">
-        <a id="downloadBtn" class="btn" href="#">Download as PDF</a>
-        <a id="printBtn" class="btn" href="#" onclick="window.print();return false;">Print</a>
-      </div>
-      <p class="footer-note center">Scan the QR to verify this certificate or view details on our website.</p>
+  <div class="certificate">
+    <div class="overlay">
+      <h1>VOLUNTEER</h1>
+      <h2>Service Certificate</h2>
+      <h3 id="workshop"></h3>
+      <p class="desc">This certificate is awarded to</p>
+      <h2 id="name"></h2>
+      <p>for contributing to social and community projects.</p>
+      <p id="date"></p>
+      <div id="qrcode"></div>
+      <p class="verify">Verify at: <a id="verifyLink" href="#">Click here</a></p>
     </div>
   </div>
 
-<script>
-// helper to get query param id
-function getId() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('id');
-}
-const id = getId();
-const resultDiv = document.getElementById('result');
-const certArea = document.getElementById('cert-area');
-const actions = document.getElementById('actions');
-if (!id) {
-  resultDiv.innerHTML = '<strong style="color:red">Missing id parameter in URL.</strong><p>Use ?id=PAWS001</p>';
-} else {
-  fetch('members.json').then(r=>r.json()).then(data=>{
-    if (!data[id]) {
-      resultDiv.innerHTML = '<strong style="color:red">Certificate not found for ID: '+id+'</strong>';
-      return;
-    }
-    const m = data[id];
-    resultDiv.style.display='none';
-    certArea.style.display='block';
-    actions.style.display='block';
-    document.getElementById('name').textContent = m.name;
-    document.getElementById('workshop').textContent = m.workshop;
-    document.getElementById('date').textContent = m.date;
-
-    // create QR image element using Google Chart API pointing to verify page (verify.html?id=...)
-    // Build verify URL relative to site root
-    const base = window.location.origin + window.location.pathname.replace('certificate.html','verify.html');
-    const verifyUrl = base + '?id=' + encodeURIComponent(id);
-    const qrImg = document.createElement('img');
-    qrImg.src = 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + encodeURIComponent(verifyUrl);
-    qrImg.alt='QR code';
-    qrImg.style.width='160px';
-    qrImg.style.height='160px';
-    document.getElementById('qr').appendChild(qrImg);
-
-    // download as pdf using html2canvas + jsPDF
-    document.getElementById('downloadBtn').addEventListener('click', async function(e){
-      e.preventDefault();
-      this.textContent = 'Preparing...';
-      const el = document.getElementById('cert-area');
-      const canvas = await html2canvas(el, {scale:2, useCORS:true, allowTaint:true});
-      const imgData = canvas.toDataURL('image/png');
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ orientation: 'landscape', unit:'px', format:[canvas.width, canvas.height] });
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save('Certificate - ' + m.name + '.pdf');
-      this.textContent = 'Download as PDF';
-    });
-  }).catch(err=>{
-    resultDiv.innerHTML = '<strong style="color:red">Error loading members.json</strong><p>'+err+'</p>';
-  })
-}
-</script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
