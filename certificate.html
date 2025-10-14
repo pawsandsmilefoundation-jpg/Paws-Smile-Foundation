@@ -2,25 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Volunteer Certificate</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Member Certificate - Paws & Smile Foundation</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="certificate">
-    <div class="overlay">
-      <h1>VOLUNTEER</h1>
-      <h2>Service Certificate</h2>
-      <h3 id="workshop"></h3>
-      <p class="desc">This certificate is awarded to</p>
-      <h2 id="name"></h2>
-      <p>for contributing to social and community projects.</p>
-      <p id="date"></p>
-      <div id="qrcode"></div>
-      <p class="verify">Verify at: <a id="verifyLink" href="#">Click here</a></p>
-    </div>
+  <div id="certificate">
+    <div id="name"></div>
+    <div id="role"></div>
+    <div id="qr"></div>
   </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
