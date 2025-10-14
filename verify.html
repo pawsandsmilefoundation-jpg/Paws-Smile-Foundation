@@ -1,71 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Certificate Verification - Paws & Smile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background:#f7f7f9; color:#222; }
-    .container { max-width:700px; margin: 40px auto; background: white; border-radius:8px; padding:28px; box-shadow:0 4px 12px rgba(0,0,0,0.08); text-align:center; }
-    .badge { color: #2e7d32; font-size:22px; font-weight:700; display:block; margin-bottom:12px; }
-    .error { color: #c62828; font-size:18px; }
-    .meta { text-align:left; margin-top:18px; }
-    .meta p { margin:6px 0; }
-    .small { color:#666; font-size:13px; margin-top:12px; }
-    .logo { max-width:150px; margin-bottom:12px; }
-    .notfound { font-size:18px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Verification | Paws & Smile Foundation</title>
+  <link rel="stylesheet" href="assets/css/verify.css">
 </head>
 <body>
-  <div class="container">
-    <img src="assets/logo.png" alt="Paws & Smile" class="logo" onerror="this.style.display='none'">
-    <h1>Certificate Verification</h1>
-    <div id="result"><p class="small">Loading...</p></div>
+  <div id="infoCard">
+    <h1>Member Verification</h1>
+    <p id="name"></p>
+    <p id="position"></p>
+    <p id="joined"></p>
   </div>
 
-  <script>
-    // Get query parameter “id”
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    const resultDiv = document.getElementById('result');
-
-    function showError(msg) {
-      resultDiv.innerHTML = '<p class="error">' + msg + '</p>';
-    }
-
-    if (!id) {
-      showError('Invalid verification link. (ID missing)');
-    } else {
-      // Load members.json
-      fetch('members.json')
-        .then(response => {
-          if (!response.ok) throw new Error('Could not load data file.');
-          return response.json();
-        })
-        .then(data => {
-          if (data[id]) {
-            const m = data[id];
-            // Build verification content
-            resultDiv.innerHTML = `
-              <p class="badge">✔ Certificate Verified</p>
-              <h2 style="margin:6px 0 4px 0;">${m.name}</h2>
-              <div class="meta">
-                <p><strong>Workshop / Event:</strong> ${m.workshop}</p>
-                <p><strong>Date:</strong> ${m.date}</p>
-                ${m.certificate_url ? `<p><strong>Certificate:</strong> <a href="${m.certificate_url}" target="_blank" rel="noopener">View PDF</a></p>` : ''}
-                ${m.note ? `<p><em>${m.note}</em></p>` : ''}
-              </div>
-              <p class="small">Verification ID: <code>${id}</code></p>
-            `;
-          } else {
-            resultDiv.innerHTML = '<p class="notfound">No certificate found for this ID. Please check the QR link or contact Paws & Smile Foundation.</p>';
-          }
-        })
-        .catch(err => {
-          showError('Error loading verification data. Please try again later.');
-          console.error(err);
-        });
-    }
-  </script>
+  <script src="assets/js/verify.js"></script>
 </body>
 </html>
