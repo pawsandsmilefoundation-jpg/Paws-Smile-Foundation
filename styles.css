@@ -1,0 +1,16 @@
+
+body { font-family: Arial, sans-serif; background:#f5f6fa; color:#222; margin:0; padding:0; }
+.container { max-width:1000px; margin:30px auto; padding:20px; }
+.card { background:white; border-radius:8px; padding:18px; box-shadow:0 6px 20px rgba(0,0,0,0.08); }
+.center { text-align:center; }
+.btn { display:inline-block; background:#2d7a5e; color:white; padding:10px 16px; border-radius:6px; text-decoration:none; margin:6px; }
+.small { color:#666; font-size:14px; }
+.verify-box { padding:18px; border:1px dashed #ddd; border-radius:8px; }
+#cert-area { width: 900px; height: 640px; margin: 20px auto; position:relative; background:#eee; }
+.cert-bg { width:100%; height:100%; object-fit:cover; display:block; }
+.cert-text { position:absolute; left:0; right:0; text-align:center; }
+.cert-name { position:absolute; top:420px; width:100%; font-size:32px; font-weight:700; color:#6b2f24; }
+.cert-workshop { position:absolute; top:360px; width:100%; font-size:20px; color:#333; }
+.cert-date { position:absolute; top:470px; width:100%; font-size:16px; color:#333; }
+.qr-box { position:absolute; left:50%; transform:translateX(-50%); top:500px; }
+.footer-note { font-size:13px; color:#666; margin-top:8px; }
