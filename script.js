@@ -26,5 +26,21 @@ async function loadCertificate() {
     height: 120,
   });
 }
+// Certificate Download Code
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadBtn");
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", () => {
+      const certificate = document.getElementById("certificate");
+      html2canvas(certificate, { scale: 3 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "certificate.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  }
+});
+
 
 window.onload = loadCertificate;
