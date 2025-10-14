@@ -29,6 +29,14 @@
       allowTaint: true,
       logging: false
     });
+      </div> <!-- overlay / certificate div close -->
+
+  <!-- Add these two lines before closing body -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
 
     const imgData = canvas.toDataURL("image/png");
 
