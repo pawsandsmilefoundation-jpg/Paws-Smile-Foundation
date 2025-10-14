@@ -1,68 +1,62 @@
-// ======== Auto Certificate Generator ========
+// 🔹 Fetch member data and generate certificate automatically
+(async function () {
+  // Helper: Get query value from URL
+  function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+  }
 
-// Helper: Read value from URL query (?name= & id=)
-function getQueryParam(param) {
-  return new URLSearchParams(window.location.search).get(param);
-}
+  const memberId = getParam("id");
+  const BASE_URL = "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/";
 
-const memberName = getQueryParam("name") || "Volunteer Name";
-const memberId = getQueryParam("id") || "PAWS01";
-const BASE_CERT_URL = window.location.origin + window.location.pathname;
+  let memberData = null;
 
-// 1️⃣ Set Member Name
-document.getElementById("memberName").textContent = memberName;
+  // Fetch member details from members.json
+  try {
+    const res = await fetch(BASE_URL + "members.json");
+    const members = await res.json();
+    memberData = members.find((m) => m.id === memberId);
+  } catch (err) {
+    console.error("Error loading member data", err);
+  }
 
-// 2️⃣ Generate Small QR (member-specific)
-const memberQrContainer = document.getElementById("memberQr");
-if (memberQrContainer) {
-  const smallCanvas = document.createElement("canvas");
-  new QRious({
-    element: smallCanvas,
-    value: `Paws & Smile Foundation | Member: ${memberName} | ID: ${memberId} | Verify: ${BASE_CERT_URL}?id=${memberId}`,
+  // If no data found
+  if (!memberData) {
+    document.body.innerHTML = `<h2 style="color:red;">Member not found!</h2>`;
+    return;
+  }
+
+  // Set name on certificate
+  document.getElementById("memberName").textContent = memberData.name;
+
+  // Generate member QR code
+  const qr = new QRious({
+    value:
+      BASE_URL +
+      "verify.html?id=" +
+      encodeURIComponent(memberData.id),
     size: 80,
     level: "H",
   });
-  memberQrContainer.appendChild(smallCanvas);
-}
 
-// 3️⃣ Generate Big QR (optional if you already have printed one)
-const qrContainer = document.getElementById("qrContainer");
-if (qrContainer) {
-  const mainCanvas = document.createElement("canvas");
-  new QRious({
-    element: mainCanvas,
-    value: `${BASE_CERT_URL}?id=${memberId}&name=${encodeURIComponent(memberName)}`,
-    size: 120,
-    level: "H",
-  });
-  qrContainer.appendChild(mainCanvas);
-}
+  document.getElementById("memberQr").appendChild(qr.canvas);
 
-// 4️⃣ Download Buttons
-const certElem = document.getElementById("certificate");
-const btnPng = document.getElementById("downloadPng");
-const btnPdf = document.getElementById("downloadPdf");
+  // Download buttons
+  const cert = document.getElementById("certificate");
 
-if (btnPng) {
-  btnPng.addEventListener("click", async () => {
-    const canvas = await html2canvas(certElem, { scale: 2 });
+  document.getElementById("downloadPng").addEventListener("click", async () => {
+    const cnv = await html2canvas(cert, { scale: 2 });
     const link = document.createElement("a");
-    link.download = `${memberName.replace(/\s+/g, "_")}_Certificate.png`;
-    link.href = canvas.toDataURL("image/png");
+    link.download = `${memberData.name.replace(/\s+/g, "_")}_Certificate.png`;
+    link.href = cnv.toDataURL("image/png");
     link.click();
   });
-}
 
-if (btnPdf) {
-  btnPdf.addEventListener("click", async () => {
-    const canvas = await html2canvas(certElem, { scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
+  document.getElementById("downloadPdf").addEventListener("click", async () => {
+    const cnv = await html2canvas(cert, { scale: 2 });
+    const imgData = cnv.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({
-      unit: "px",
-      format: [canvas.width, canvas.height],
-    });
-    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-    pdf.save(`${memberName.replace(/\s+/g, "_")}_Certificate.pdf`);
+    const pdf = new jsPDF({ unit: "px", format: [cnv.width, cnv.height] });
+    pdf.addImage(imgData, "PNG", 0, 0, cnv.width, cnv.height);
+    pdf.save(`${memberData.name.replace(/\s+/g, "_")}_Certificate.pdf`);
   });
-}
+})();
