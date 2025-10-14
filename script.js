@@ -1,17 +1,17 @@
-  // Build verify URL (adjust to your repo)
-  const base = window.location.origin + window.location.pathname.replace('certificate.html','verify.html');
-  const verifyUrl = base + '?id=' + encodeURIComponent(member.id);
+// verifyUrl ban raha hai (verify.html?id=123)
+const base = window.location.origin + window.location.pathname.replace('certificate.html','verify.html');
+const verifyUrl = base + '?id=' + encodeURIComponent(member.id);
 
-  // Generate QR using qrcodejs inside the #qr container
-  const qrDiv = document.getElementById("qr");
-  qrDiv.innerHTML = ""; // clear any existing
-  // Make QR size same as CSS (110x110)
-  new QRCode(qrDiv, {
-    text: verifyUrl,
-    width: 110,
-    height: 110,
-    correctLevel: QRCode.CorrectLevel.H
-  });
+// ab QR generate karo
+const qrDiv = document.getElementById("qr");
+qrDiv.innerHTML = ""; // clear old QR
+new QRCode(qrDiv, {
+  text: verifyUrl,
+  width: 110,
+  height: 110,
+  correctLevel: QRCode.CorrectLevel.H
+});
+
 
   // DOWNLOAD PDF (high quality)
   const downloadBtn = document.getElementById("downloadBtn");
