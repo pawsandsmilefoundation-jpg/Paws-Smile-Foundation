@@ -41,15 +41,7 @@ body {
   pointer-events: none; /* allow button clicks outside if any */
 }
 
-/* Name - GOLD color and subtle glow */
-#name {
-  margin-top: 18px;
-  font-size: 46px;
-  font-weight: 800;
-  color: var(--gold);
-  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  letter-spacing: 1px;
-}
+
 
 /* Workshop and details */
 #workshop {
@@ -70,12 +62,37 @@ body {
   width: 100%;
   height: auto;
 }
-#qr {
+/* name + qr wrapper placed absolutely so it sits over the certificate where we want */
+.name-qr {
   position: absolute;
-  right: 56px;          /* adjust to match your design */
-  bottom: 60px;         /* adjust to match your design */
-  width: 110px;
+  top: 280px;              /* tweak this up/down to align vertically (try 240-320 range) */
+  left: 50%;
+  transform: translateX(-50%); /* center horizontally */
+  display: flex;
+  align-items: center;
+  gap: 20px;               /* space between name and qr */
+  pointer-events: none;    /* keep certificate non-interactive by default */
+}
+
+/* keep the name style but remove margin-top if present */
+#name {
+  margin: 0;
+  font-size: 46px;
+  font-weight: 800;
+  color: var(--gold);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+/* QR no longer absolutely positioned to bottom — it will be inside .name-qr */
+#qr {
+  position: relative;   /* static/relative inside the name-qr flex box */
+  width: 110px;         /* desired QR size */
   height: 110px;
+  pointer-events: auto; /* allow QR to be scanned on screen */
+}
+
 }
 
 /* Download button (visible below certificate area) */
