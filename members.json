@@ -1,14 +1,14 @@
-{
-  "PAWS001": {
+[
+  {
+    "id": "PAWS001",
     "name": "Tanush Kumar",
     "workshop": "Social Services",
-    "date": "01-10-2025",
-    "certificate_pdf": ""
+    "date": "1-10-2025"
   },
-  "PAWS002": {
+  {
+    "id": "PAWS002",
     "name": "Dimple Sharma",
     "workshop": "Social Services",
-    "date": "01-10-2025",
-    "certificate_pdf": ""
+    "date": "1-10-2025"
   }
-}
+]
