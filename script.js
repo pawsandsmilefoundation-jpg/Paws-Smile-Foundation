@@ -7,7 +7,7 @@ async function loadCertificate() {
     return;
   }
 
-  const response = await fetch("members.json");
+  const response = await fetch("./members.json");
   const members = await response.json();
   const member = members.find(m => m.id === id);
 
