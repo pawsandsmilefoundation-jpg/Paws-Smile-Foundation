@@ -86,4 +86,11 @@
     downloadBtn.disabled = false;
     downloadBtn.textContent = "Download PDF";
   });
+   // Generate QR
+  const qrCode = new QRCode(document.getElementById("qr"), {
+    text: member.certificate_url,
+    width: 120,
+    height: 120,
+  });
+}
 })();
