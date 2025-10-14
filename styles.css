@@ -64,18 +64,15 @@ body {
 }
 .name-qr {
   position: absolute;
-  top: 340px;
+  top: 280px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 35px;
+  gap: 20px;
+  pointer-events: none;
 }
 
-#qr {
-  width: 110px;
-  height: 110px;
-  background: transparent;
 }
 
 /* keep the name style but remove margin-top if present */
