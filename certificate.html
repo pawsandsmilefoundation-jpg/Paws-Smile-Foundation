@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificate | Paws and Smile Foundation</title>
-  <link rel="stylesheet" href="assets/css/certificate.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paws & Smile Foundation | Certificate</title>
 
-  <!-- Libraries -->
+  <link rel="stylesheet" href="assets/css/certificate.css" />
+
+  <!-- QR + Canvas Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
+
 <body>
-
   <div id="certificate">
-    <img id="bg" src="assets/images/certificate-bg.jpg" alt="Certificate Background">
+    <img id="bg" src="assets/images/certificate-bg.jpg" alt="Certificate Background" />
 
-    <!-- Name Area -->
+    <!-- Name -->
     <div id="memberName"></div>
 
-    <!-- Small QR near name -->
+    <!-- QR -->
     <div id="memberQr"></div>
-
-    <!-- Main QR (if you want overlayed one also visible) -->
-    <div id="qrContainer"></div>
   </div>
 
-  <!-- Download Buttons -->
   <div class="buttons">
-    <button id="downloadPng">Download as PNG</button>
-    <button id="downloadPdf">Download as PDF</button>
+    <button id="downloadPng">Download PNG</button>
+    <button id="downloadPdf">Download PDF</button>
   </div>
 
-  <!-- Script -->
   <script src="assets/js/certificate.js"></script>
 </body>
 </html>
