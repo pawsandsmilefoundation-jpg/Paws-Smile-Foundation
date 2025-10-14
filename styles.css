@@ -62,16 +62,20 @@ body {
   width: 100%;
   height: auto;
 }
-/* name + qr wrapper placed absolutely so it sits over the certificate where we want */
 .name-qr {
   position: absolute;
-  top: 340px;              /* tweak this up/down to align vertically (try 240-320 range) */
+  top: 340px;
   left: 50%;
-  transform: translateX(-50%); /* center horizontally */
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 20px;               /* space between name and qr */
-  pointer-events: none;    /* keep certificate non-interactive by default */
+  gap: 35px;
+}
+
+#qr {
+  width: 110px;
+  height: 110px;
+  background: transparent;
 }
 
 /* keep the name style but remove margin-top if present */
