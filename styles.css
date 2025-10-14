@@ -1,72 +1,89 @@
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #f4f4f4;
-  text-align: center;
-  margin: 0;
-  padding: 0;
+/* styles.css */
+:root{
+  --gold: #D4AF37; /* professional gold */
+  --text-dark: #222;
 }
-
+body {
+  margin: 0;
+  font-family: "Georgia", serif;
+  background: #f4f4f6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.wrapper {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 12px;
+  text-align: center;
+}
 #certificate {
   position: relative;
-  width: 1000px;
-  height: 700px;
-  margin: 40px auto;
-  background-image: url('assets/certificate-bg.jpg');
+  width: 1000px;      /* certificate width in px */
+  height: 700px;      /* certificate height in px */
+  margin: 0 auto;
+  background-image: url('assets/certificate-bg.jpg'); /* change path if needed */
   background-size: cover;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  background-position: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
+/* Overlay text area — use transparent so the background shows */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none; /* allow button clicks outside if any */
+}
+
+/* Name - GOLD color and subtle glow */
 #name {
-  position: absolute;
-  top: 340px;
-  left: 0;
-  right: 0;
-  font-size: 40px;
-  font-weight: bold;
-  color: #222;
+  margin-top: 18px;
+  font-size: 46px;
+  font-weight: 800;
+  color: var(--gold);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  letter-spacing: 1px;
 }
 
-#role {
-  position: absolute;
-  top: 410px;
-  left: 0;
-  right: 0;
-  font-size: 24px;
-  color: #555;
+/* Workshop and details */
+#workshop {
+  margin-top: 6px;
+  font-size: 20px;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+#date {
+  margin-top: 8px;
+  font-size: 16px;
+  color:#333;
 }
 
+/* QR holder */
 #qr {
   position: absolute;
-  bottom: 50px;
-  right: 60px;
+  right: 56px;          /* adjust to match your design */
+  bottom: 60px;         /* adjust to match your design */
+  width: 150px;
+  height: 150px;
 }
-#name {
-  position: absolute;
-  top: 340px;
-  left: 0;
-  right: 0;
-  font-size: 40px;
-  font-weight: bold;
-  color: #FFD700; /* Golden color */
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-  font-family: 'Georgia', serif;
-  letter-spacing: 2px;
-}
+
+/* Download button (visible below certificate area) */
 #downloadBtn {
-  display: block;
-  margin: 20px auto;
-  padding: 12px 24px;
-  background: linear-gradient(45deg, #FFD700, #FF8C00);
+  margin-top: 16px;
+  display: inline-block;
+  pointer-events: auto;
+  background: linear-gradient(90deg,#FFD700,#FFB347);
+  color:#111;
   border: none;
+  padding: 10px 18px;
   border-radius: 8px;
-  color: #222;
-  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
-
-#downloadBtn:hover {
-  transform: scale(1.05);
-}
-
