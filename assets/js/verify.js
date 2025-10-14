@@ -3,7 +3,7 @@
   const BASE_URL = "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/";
 
   const res = await fetch(BASE_URL + "members.json");
-  const data = await res.json();
+  const data = await res.json();j
 
   const member = data.find((m) => m.id === id);
   const card = document.getElementById("infoCard");
