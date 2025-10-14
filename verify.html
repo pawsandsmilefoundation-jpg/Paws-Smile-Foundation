@@ -2,37 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Verify Certificate</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Verify Member</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body style="text-align:center;padding:50px;">
-  <h1>Certificate Verification</h1>
-  <div id="details"></div>
-
-  <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id");
-
-  if (!id) {
-    document.body.innerHTML = "<h2>Missing id parameter in URL</h2>";
-    throw new Error("No id");
-  }
-
-  fetch("members.json")
-    .then(res => res.json())
-    .then(data => {
-      const member = data.find(m => m.id === id);
-      if (!member) {
-        document.body.innerHTML = "<h2>Invalid Certificate ID</h2>";
-        return;
-      }
-      document.getElementById("details").innerHTML = `
-        <h2>${member.name}</h2>
-        <p>Workshop: ${member.workshop}</p>
-        <p>Date: ${member.date}</p>
-        <p>Status: ✅ Verified</p>
-      `;
-    });
-  </script>
+<body>
+  <h1>Verify Member</h1>
+  <p>Scan QR from certificate to verify authenticity.</p>
 </body>
 </html>
