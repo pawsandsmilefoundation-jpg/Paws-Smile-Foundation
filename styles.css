@@ -65,7 +65,7 @@ body {
 /* name + qr wrapper placed absolutely so it sits over the certificate where we want */
 .name-qr {
   position: absolute;
-  top: 280px;              /* tweak this up/down to align vertically (try 240-320 range) */
+  top: 340px;              /* tweak this up/down to align vertically (try 240-320 range) */
   left: 50%;
   transform: translateX(-50%); /* center horizontally */
   display: flex;
