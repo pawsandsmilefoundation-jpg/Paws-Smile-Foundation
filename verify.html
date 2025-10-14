@@ -1,49 +1,38 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Verify Certificate - Paws & Smile Foundation</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Verify Certificate</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="container">
-    <div class="card verify-box center">
-      <h2>Certificate Verification</h2>
-      <div id="result">Loading...</div>
-      <div style="margin-top:12px;">
-        <a id="viewCert" class="btn" style="display:none;">View Certificate</a>
-      </div>
-      <p class="small">If the certificate is valid, you can view and download it.</p>
-    </div>
-  </div>
+<body style="text-align:center;padding:50px;">
+  <h1>Certificate Verification</h1>
+  <div id="details"></div>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const id = params.get('id');
-const result = document.getElementById('result');
-const viewBtn = document.getElementById('viewCert');
-if (!id) {
-  result.innerHTML = '<p style="color:red">Invalid verification link. No ID provided.</p>';
-} else {
-  fetch('members.json').then(r=>r.json()).then(data=>{
-    if (!data[id]) {
-      result.innerHTML = '<p style="color:red">No certificate found for ID: '+id+'</p>';
-      return;
-    }
-    const m = data[id];
-    result.innerHTML = '<p class="small"><strong>Verified ✔</strong></p>' +
-        '<p><strong>Name:</strong> ' + m.name + '</p>' +
-        '<p><strong>Workshop:</strong> ' + m.workshop + '</p>' +
-        '<p><strong>Date:</strong> ' + m.date + '</p>';
-    viewBtn.style.display='inline-block';
-    const certLink = window.location.origin + window.location.pathname.replace('verify.html','certificate.html') + '?id=' + encodeURIComponent(id);
-    viewBtn.href = certLink;
-    viewBtn.textContent = 'View Certificate';
-  }).catch(err=>{
-    result.innerHTML = '<p style="color:red">Error loading data.</p>';
-  });
-}
-</script>
+  <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+
+  if (!id) {
+    document.body.innerHTML = "<h2>Missing id parameter in URL</h2>";
+    throw new Error("No id");
+  }
+
+  fetch("members.json")
+    .then(res => res.json())
+    .then(data => {
+      const member = data.find(m => m.id === id);
+      if (!member) {
+        document.body.innerHTML = "<h2>Invalid Certificate ID</h2>";
+        return;
+      }
+      document.getElementById("details").innerHTML = `
+        <h2>${member.name}</h2>
+        <p>Workshop: ${member.workshop}</p>
+        <p>Date: ${member.date}</p>
+        <p>Status: ✅ Verified</p>
+      `;
+    });
+  </script>
 </body>
 </html>
