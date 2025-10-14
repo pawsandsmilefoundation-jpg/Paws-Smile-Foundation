@@ -12,7 +12,8 @@
   // Load members.json
   let members;
   try {
-    const r = await fetch("./members.json");
+   const response = await fetch("./members.json");
+
     members = await r.json();
   } catch (err) {
     console.error("Could not load members.json", err);
