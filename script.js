@@ -86,8 +86,8 @@
      // Generate QR
   const qrCode = new QRCode(document.getElementById("qr"), {
     text: member.certificate_url,
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
   });
 
     downloadBtn.disabled = false;
