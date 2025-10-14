@@ -82,6 +82,13 @@
     // Save with member name (sanitise filename)
     const safeName = (member.name || "certificate").replace(/[^a-z0-9\-_\s\.]/gi,'').trim();
     pdf.save(`Certificate - ${safeName}.pdf`);
+    
+     // Generate QR
+  const qrCode = new QRCode(document.getElementById("qr"), {
+    text: member.certificate_url,
+    width: 120,
+    height: 120,
+  });
 
     downloadBtn.disabled = false;
     downloadBtn.textContent = "Download PDF";
