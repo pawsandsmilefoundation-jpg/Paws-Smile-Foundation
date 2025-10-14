@@ -40,3 +40,16 @@ body {
   bottom: 50px;
   right: 60px;
 }
+#name {
+  position: absolute;
+  top: 340px;
+  left: 0;
+  right: 0;
+  font-size: 40px;
+  font-weight: bold;
+  color: #FFD700; /* Golden color */
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+  font-family: 'Georgia', serif;
+  letter-spacing: 2px;
+}
+
