@@ -1,3 +1,11 @@
+.certificate {
+  width: 100%;
+  height: 100vh;
+  background-image: url('images/certificate-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
 body { font-family: Arial, sans-serif; background:#f5f6fa; color:#222; margin:0; padding:0; }
 .container { max-width:1000px; margin:30px auto; padding:20px; }
