@@ -1,12 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Verify Member</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <title>Verify Certificate</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f7f7f9; padding:30px; color:#222; }
+    .card{ max-width:700px; margin:30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    h1{ margin:0 0 8px 0; }
+    .meta{ color:#555; margin-bottom:12px; }
+    .company{ margin-top:14px; padding-top:12px; border-top:1px solid #eee;}
+  </style>
 </head>
 <body>
-  <h1>Verify Member</h1>
-  <p>Scan QR from certificate to verify authenticity.</p>
+  <div class="card" id="out">
+    <h1>Verifying...</h1>
+    <div class="meta" id="meta"></div>
+    <div id="data"></div>
+  </div>
+
+  <script>
+  (async function(){
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if(!id){ document.getElementById('out').innerHTML = '<h1>Invalid verify link</h1>'; return; }
+
+    try{
+      const r = await fetch('./members.json');
+      const members = await r.json();
+      const member = members.find(m => String(m.id) === String(id));
+      if(!member){
+        document.getElementById('out').innerHTML = '<h1>No certificate found</h1>';
+        return;
+      }
+
+      document.getElementById('out').innerHTML = `
+        <h1>Certificate Verified</h1>
+        <div class="meta">Name: <strong>${member.name}</strong> — Date: ${member.date || 'N/A'}</div>
+        <div id="data">
+          <p><strong>Workshop / Role:</strong> ${member.workshop || 'N/A'}</p>
+          <div class="company">
+            <h3>Organization</h3>
+            <p><strong>${member.company?.name || 'Paws & Smile Foundation'}</strong></p>
+            <p>${member.company?.about || 'Non-profit organization working for animals.'}</p>
+            <p><strong>Contact:</strong> ${member.company?.contact || 'contact@pawsandsmile.example'}</p>
+          </div>
+        </div>
+      `;
+    }catch(e){
+      document.getElementById('out').innerHTML = '<h1>Error loading data</h1>';
+      console.error(e);
+    }
+  })();
+  </script>
 </body>
 </html>
