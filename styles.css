@@ -1,48 +1,42 @@
 body {
+  font-family: 'Poppins', sans-serif;
+  background: #f4f4f4;
+  text-align: center;
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #ddd;
+  padding: 0;
 }
 
-.certificate {
-  background: url('certificate-bg.jpg') no-repeat center center;
-  background-size: cover;
+#certificate {
+  position: relative;
   width: 1000px;
   height: 700px;
-  margin: 50px auto;
-  text-align: center;
-  padding-top: 100px;
-  position: relative;
+  margin: 40px auto;
+  background-image: url('assets/certificate-bg.jpg');
+  background-size: cover;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  border-radius: 10px;
-}
-
-.overlay {
-  background: rgba(255,255,255,0.7);
-  width: 90%;
-  height: 85%;
-  margin: auto;
-  border-radius: 20px;
-  padding: 40px;
-}
-
-h1 {
-  color: #8B4513;
-  font-size: 50px;
-  margin-bottom: 0;
 }
 
 #name {
-  font-size: 30px;
-  color: #333;
+  position: absolute;
+  top: 340px;
+  left: 0;
+  right: 0;
+  font-size: 40px;
   font-weight: bold;
+  color: #222;
 }
 
-#workshop {
-  font-size: 22px;
+#role {
+  position: absolute;
+  top: 410px;
+  left: 0;
+  right: 0;
+  font-size: 24px;
   color: #555;
 }
 
-#qrcode {
-  margin: 20px auto;
+#qr {
+  position: absolute;
+  bottom: 50px;
+  right: 60px;
 }
