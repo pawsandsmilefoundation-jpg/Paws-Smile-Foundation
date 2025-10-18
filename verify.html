@@ -2,36 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Verify Certificate - Paws & Smile Foundation</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Certificate | Paws and Smile Foundation</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f7f7f7;
+      text-align: center;
+      padding: 40px;
+    }
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: inline-block;
+      padding: 40px;
+      max-width: 600px;
+    }
+    .verified {
+      color: green;
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #d4af37;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h2>Certificate Verification</h2>
-  <p>Enter Member ID:</p>
-  <input type="text" id="verifyId" placeholder="e.g., 001">
-  <button onclick="verify()">Verify</button>
-  <div id="result"></div>
+  <div class="card" id="verifyCard">
+    <h2>Verifying Certificate...</h2>
+  </div>
 
   <script>
-    async function verify() {
-      const id = document.getElementById("verifyId").value.trim();
-      const response = await fetch("members.json");
-      const members = await response.json();
-      const member = members.find(m => m.id === id);
-      const result = document.getElementById("result");
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberId = urlParams.get('id');
 
-      if (member) {
-        result.innerHTML = `
-          ✅ Verified<br>
-          Name: ${member.name}<br>
-          Role: ${member.role}<br>
-          Joined: ${member.joined}<br>
-          <a href="${member.certificate_url}" target="_blank">View Certificate</a>
+    fetch('members.json')
+      .then(res => res.json())
+      .then(data => {
+        const member = data.find(m => m.id === memberId);
+        const card = document.getElementById("verifyCard");
+
+        if (!member) {
+          card.innerHTML = "<h3 style='color:red;'>❌ Invalid Certificate ID</h3>";
+          return;
+        }
+
+        card.innerHTML = `
+          <div class="verified">✅ Verified Certificate</div>
+          <h2>${member.name}</h2>
+          <p><b>Role:</b> ${member.role}</p>
+          <p><b>Joined:</b> ${member.joined}</p>
+          <p><b>Certificate ID:</b> ${member.id}</p>
+          <button onclick="window.open('certificate.html?id=${member.id}', '_blank')">View Certificate</button>
         `;
-      } else {
-        result.textContent = "❌ No record found";
-      }
-    }
+      });
   </script>
 </body>
 </html>
