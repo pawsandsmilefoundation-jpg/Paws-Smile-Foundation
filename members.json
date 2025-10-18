@@ -1,16 +1,8 @@
 [
   {
-    "id": "001",
+    "id": "PAWS01",
     "name": "Tanush Kashyap",
-    "role": "Member",
-    "joined": "2025-10-10",
-    "certificate_url": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/certificate.html?id=001"
-  },
-  {
-    "id": "002",
-    "name": "Dimple Sharma",
     "role": "Volunteer",
-    "joined": "2025-10-12",
-    "certificate_url": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/certificate.html?id=002"
+    "joined": "2025-10-10"
   }
 ]
