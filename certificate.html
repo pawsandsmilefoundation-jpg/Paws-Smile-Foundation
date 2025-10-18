@@ -2,29 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Certificate - Paws & Smile Foundation</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- QR, Canvas, PDF Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate | Paws and Smile Foundation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: #f2f2f2;
+      font-family: 'Poppins', sans-serif;
+    }
+    .certificate-container {
+      position: relative;
+      display: inline-block;
+    }
+    .certificate-bg {
+      width: 100%;
+      max-width: 1000px;
+      display: block;
+    }
+    .name {
+      position: absolute;
+      top: 37%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-weight: 700;
+      color: #d4af37; /* Golden */
+      text-transform: capitalize;
+    }
+    .qr {
+      position: absolute;
+      bottom: 23%;
+      left: 48%;
+      transform: translateX(-50%);
+    }
+    #downloadBtn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #d4af37;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div class="certificate" id="certificate">
-    <img src="assets/images/certificate-bg.jpg.jpeg" alt="Certificate Background" class="bg">
-    <div class="content">
-      <h1 id="memberName"></h1>
-      <p id="memberRole"></p>
-      <p id="memberDate"></p>
-      <canvas id="qrCode"></canvas>
-    </div>
+  <div id="certificate" class="certificate-container">
+    <img src="assets/images/certificate-bg.jpg.jpeg" alt="Certificate Background" class="certificate-bg">
+    <div class="name" id="memberName"></div>
+    <div class="qr" id="qrcode"></div>
   </div>
 
-  <div class="buttons">
-    <button onclick="downloadCertificate()">Download PDF</button>
-  </div>
+  <button id="downloadBtn">Download as PDF</button>
 
-  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberId = urlParams.get('id');
+
+    fetch('members.json')
+      .then(res => res.json())
+      .then(data => {
+        const member = data.find(m => m.id === memberId);
+        if (!member) {
+          document.body.innerHTML = "<h2>No record found for this ID</h2>";
+          return;
+        }
+
+        document.getElementById("memberName").textContent = member.name;
+
+        new QRCode(document.getElementById("qrcode"), {
+          text: `https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/verify.html?id=${member.id}`,
+          width: 100,
+          height: 100
+        });
+
+        document.getElementById("downloadBtn").addEventListener("click", async () => {
+          const canvas = await html2canvas(document.getElementById("certificate"));
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          const pdf = new jspdf.jsPDF("l", "mm", "a4");
+          const imgWidth = 297;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
+          pdf.save(`${member.name}-Certificate.pdf`);
+        });
+      });
+  </script>
 </body>
 </html>
