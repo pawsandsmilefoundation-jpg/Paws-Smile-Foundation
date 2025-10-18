@@ -24,7 +24,7 @@ async function loadCertificate() {
   memberRole.textContent = `Role: ${member.role}`;
   memberDate.textContent = `Joined: ${member.joined}`;
 
-  // Generate QR Code for verification
+  // Generate QR code for verification
   new QRious({
     element: qrCanvas,
     value: member.certificate_url,
@@ -32,15 +32,14 @@ async function loadCertificate() {
   });
 }
 
-// 🧾 Download certificate as professional PDF
+// 🧾 Download certificate as PDF (professional)
 async function downloadCertificate() {
   const certificate = document.getElementById("certificate");
-
   const canvas = await html2canvas(certificate, {
     scale: 2,
     useCORS: true
   });
-  
+
   const imgData = canvas.toDataURL("image/png");
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("landscape", "pt", [canvas.width, canvas.height]);
