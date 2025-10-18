@@ -1,14 +1,16 @@
 [
   {
-    "id": "123",
+    "id": "001",
     "name": "Tanush Kashyap",
-    "workshop": "Social Services",
-    "date": "2025-10-14",
-    "certificate_url": "https://yourdomain/certificate.html?id=123",
-    "company": {
-      "name": "Paws & Smile Foundation",
-      "about": "NGO focused on animal welfare and community services.",
-      "contact": "info@pawsandsmile.org"
-    }
+    "role": "Member",
+    "joined": "2025-10-10",
+    "certificate_url": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/certificate.html?id=001"
+  },
+  {
+    "id": "002",
+    "name": "Dimple Sharma",
+    "role": "Volunteer",
+    "joined": "2025-10-12",
+    "certificate_url": "https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/certificate.html?id=002"
   }
 ]
