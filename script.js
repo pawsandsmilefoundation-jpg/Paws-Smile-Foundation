@@ -24,7 +24,7 @@ async function loadCertificate() {
   memberRole.textContent = `Role: ${member.role}`;
   memberDate.textContent = `Joined: ${member.joined}`;
 
-  // Generate QR code for verification link
+  // Generate QR Code for verification
   new QRious({
     element: qrCanvas,
     value: member.certificate_url,
