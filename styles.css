@@ -28,7 +28,7 @@ body {
 }
 
 #memberName {
-  color: #d4af37; /* Gold */
+  color: #d4af37; /* Gold color */
   font-size: 48px;
   font-weight: 700;
 }
@@ -68,3 +68,4 @@ button {
 button:hover {
   background-color: #b38f2e;
 }
+
