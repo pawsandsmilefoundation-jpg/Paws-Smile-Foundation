@@ -1,32 +1,27 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>Certificate - Paws & Smile Foundation</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <div class="wrapper">
-    <div id="certificate">
-      <div class="overlay" id="overlay">
-        <div id="workshop"></div>
-        <div id="name"></div>
-        <div id="date"></div>
-        <div id="qr"></div>
-      </div>
-    </div>
-
-    <div>
-      <button id="downloadBtn">Download PDF</button>
+  <div class="certificate" id="certificate">
+    <img src="images/certificate-bg.jpg" alt="Certificate Background" class="bg">
+    <div class="content">
+      <h1 id="memberName"></h1>
+      <p id="memberRole"></p>
+      <p id="memberDate"></p>
+      <canvas id="qrCode"></canvas>
     </div>
   </div>
 
-  <!-- QR generator -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-  <!-- html2canvas and jsPDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <div class="buttons">
+    <button onclick="downloadCertificate()">Download PDF</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
