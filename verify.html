@@ -5,52 +5,13 @@
 <title>Member Verification | Paws & Smile Foundation</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-  body {
-    font-family: Poppins, sans-serif;
-    text-align: center;
-    background: #f8f9fa;
-    padding-top: 40px;
-  }
-  .card {
-    display: inline-block;
-    background: #fff;
-    padding: 26px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    max-width: 420px;
-    text-align: left;
-  }
-  img {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #b8753f;
-  }
-  .name {
-    font-size: 22px;
-    font-weight: 700;
-    margin-top: 10px;
-    color: #222;
-  }
-  .info {
-    margin-top: 12px;
-    line-height: 1.6;
-    color: #333;
-  }
-  .verified {
-    margin-top: 14px;
-    color: green;
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-  }
-  .notfound {
-    color: #c0392b;
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-  }
+  body{ font-family:Poppins, sans-serif; text-align:center; background:#f8f9fa; padding-top:40px; }
+  .card{ display:inline-block; background:#fff; padding:26px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08); max-width:420px; text-align:left; }
+  img{ width:110px; height:110px; border-radius:50%; object-fit:cover; border:3px solid #b8753f; }
+  .name{ font-size:22px; font-weight:700; margin-top:10px; color:#222; }
+  .info{ margin-top:12px; line-height:1.6; color:#333; }
+  .verified{ margin-top:14px; color:green; font-weight:700; font-size:18px; text-align:center; }
+  .notfound{ color:#c0392b; font-weight:700; font-size:18px; text-align:center; }
 </style>
 </head>
 <body>
@@ -58,22 +19,20 @@
   <div id="result"></div>
 
 <script>
-async function loadMembers() {
-  try {
+async function loadMembers(){
+  try{
     const res = await fetch('members.json', { cache: 'no-store' });
     if(!res.ok) throw new Error('members.json not found');
     return await res.json();
-  } catch(e) {
+  }catch(e){
     console.error(e);
     return null;
   }
 }
 
-function normalize(s) {
-  return (s || '').trim().replace(/\s+/g, ' ').toLowerCase();
-}
+function normalize(s){ return (s||'').trim().replace(/\s+/g,' ').toLowerCase(); }
 
-async function showVerification() {
+async function showVerification(){
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   const nameParam = params.get('name');
