@@ -1,22 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Member Verification | Paws & Smile Foundation</title>
 <style>
-body { font-family: Poppins, sans-serif; text-align:center; margin-top:50px; }
-.verified { color: green; font-size: 24px; font-weight: bold; }
+body {
+  font-family: Poppins, sans-serif;
+  text-align: center;
+  background: #f8f9fa;
+  margin-top: 50px;
+}
+.card {
+  display: inline-block;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  max-width: 400px;
+}
+img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #b8753f;
+}
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333;
+}
+.info {
+  text-align: left;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.verified {
+  margin-top: 20px;
+  color: green;
+  font-size: 22px;
+  font-weight: bold;
+}
+.notfound {
+  color: red;
+  font-size: 20px;
+}
 </style>
 </head>
 <body>
+
 <h2>Paws and Smile Foundation - Member Verification</h2>
-<p id="memberInfo"></p>
-<p class="verified">✅ Verified Member</p>
+<div id="result"></div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const name = params.get("name");
-document.getElementById("memberInfo").innerText = name ? `Member Name: ${name}` : "Member not found!";
+async function loadMember() {
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name");
+  const resultDiv = document.getElementById("result");
+
+  try {
+    const res = await fetch("member.json");
+    const members = await res.json();
+    const member = members.find(m => m.name.toLowerCase() === name.toLowerCase());
+
+    if (member) {
+      resultDiv.innerHTML = `
+        <div class="card">
+          <img src="${member.photo}" alt="${member.name}">
+          <div class="name">${member.name}</div>
+          <div class="info">
+            <p><b>ID:</b> ${member.id}</p>
+            <p><b>Role:</b> ${member.role}</p>
+            <p><b>Project:</b> ${member.project}</p>
+            <p><b>Joined:</b> ${member.joined}</p>
+          </div>
+          <div class="verified">✅ Verified Member</div>
+        </div>
+      `;
+    } else {
+      resultDiv.innerHTML = `<p class="notfound">❌ No record found for "${name}"</p>`;
+    }
+  } catch (err) {
+    resultDiv.innerHTML = `<p class="notfound">Error loading member data!</p>`;
+    console.error(err);
+  }
+}
+
+loadMember();
 </script>
 </body>
 </html>
