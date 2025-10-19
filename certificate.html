@@ -69,8 +69,8 @@ let currentMember = null;
 async function loadMembersOnce(){
   if(memberList) return memberList;
   try{
-    const res = await fetch('member.json', { cache: 'no-store' });
-    if(!res.ok) throw new Error('member.json not found');
+    const res = await fetch('members.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('members.json not found');
     memberList = await res.json();
     return memberList;
   } catch(e){
@@ -115,7 +115,7 @@ document.getElementById('genBtn').addEventListener('click', async ()=>{
   if(!input.trim()){ document.getElementById('msg').innerText = 'Please enter Member ID or Name.'; return; }
 
   const members = await loadMembersOnce();
-  if(!members){ document.getElementById('msg').innerText = 'member.json missing or failed to load.'; return; }
+  if(!members){ document.getElementById('msg').innerText = 'members.json missing or failed to load.'; return; }
 
   const found = findMember(input);
   if(!found){
