@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Paws & Smile - Certificate Generator (ID or Name)</title>
+<title>Paws & Smile - Certificate Generator</title>
 
 <!-- Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
@@ -11,42 +11,89 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-  body{ font-family:'Poppins',sans-serif; text-align:center; background:#f6f6f6; padding:20px; }
+  body{
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+    background:#f6f6f6;
+    padding:20px;
+  }
   .container{ max-width:900px; margin:0 auto; }
-  input{ padding:10px; font-size:16px; width:320px; border-radius:8px; border:1px solid #bbb; }
-  button{ margin-left:10px; padding:10px 18px; font-size:16px; background:#b8753f; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+  input{
+    padding:10px; font-size:16px; width:320px;
+    border-radius:8px; border:1px solid #bbb;
+  }
+  button{
+    margin-left:10px; padding:10px 18px; font-size:16px;
+    background:#b8753f; color:#fff; border:none;
+    border-radius:8px; cursor:pointer;
+  }
   button:hover{ background:#9b5f2a; }
 
   /* Certificate area */
   #certificate{
-    width:1000px; height:700px; margin:26px auto; position:relative;
-    display:none; background:url('assets/images/certificate-bg.jpg.jpeg') no-repeat center center/cover;
-    box-shadow:0 8px 30px rgba(0,0,0,0.12); border-radius:10px;
-  }
-  .name{ position:absolute; top:340px; left:0; right:0; text-align:center; font-size:34px; font-weight:600; color:#3c2b1b; }
-  .qr-box{
-    position:absolute; right:120px; bottom:110px; width:140px; height:140px; background:#fff; border:4px solid gold;
-    border-radius:10px; display:flex; justify-content:flex-start; align-items:flex-end; padding:12px 10px; box-sizing:border-box;
+    width:1000px;
+    height:700px;
+    margin:26px auto;
+    position:relative;
+    display:none;
+    background:url('assets/images/certificate-bg.jpg.jpeg') no-repeat center center/cover;
+    box-shadow:0 8px 30px rgba(0,0,0,0.12);
+    border-radius:10px;
   }
 
-  #downloadBtn{ display:none; margin-top:16px; background:#2c7d32; }
+  /* Name text */
+  .name{
+    position:absolute;
+    top:340px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:34px;
+    font-weight:600;
+    color:#3c2b1b;
+  }
+
+  /* QR box (bottom-left inside golden area) */
+  .qr-box{
+    position:absolute;
+    right:120px;
+    bottom:110px;
+    width:140px;
+    height:140px;
+    background:#fff;
+    border:4px solid gold;
+    border-radius:10px;
+    display:flex;
+    justify-content:flex-start;
+    align-items:flex-end;
+    padding:12px 10px;
+    box-sizing:border-box;
+  }
+
+  #downloadBtn{
+    display:none;
+    margin-top:16px;
+    background:#2c7d32;
+  }
   #downloadBtn:hover{ background:#226428; }
-  .thank{ margin-top:18px; font-size:18px; color:#333; }
+
+  .thank{
+    margin-top:18px;
+    font-size:18px;
+    color:#333;
+  }
   .note{ margin-top:6px; color:#666; font-size:13px; }
   .err{ color:#c0392b; font-weight:600; margin-top:12px; }
-  small { display:block; margin-top:6px; color:#555; }
 </style>
 </head>
 <body>
   <div class="container">
     <h2>Paws & Smile Foundation — Certificate Generator</h2>
 
-    <!-- NOTE: user can paste either ID (e.g., PSF001) OR full name (e.g., Riya Sharma) -->
     <div>
-      <input id="memberInput" placeholder="Enter Member ID (PSF001) OR Name (Riya Sharma)" />
+      <input id="memberName" placeholder="Enter Member Name exactly as in records (e.g., Riya Sharma)" />
       <button id="genBtn">Generate Certificate</button>
     </div>
-    <small>Tip: prefer using the Member <b>ID</b> for exact match.</small>
 
     <div id="msg" class="err" aria-live="polite"></div>
 
@@ -62,102 +109,65 @@
   </div>
 
 <script>
-let memberList = null;
-let currentMember = null;
-
-// Load members once
+let memberList=null;
 async function loadMembersOnce(){
   if(memberList) return memberList;
   try{
-    const res = await fetch('member.json', { cache: 'no-store' });
+    const res=await fetch('member.json',{cache:"no-store"});
     if(!res.ok) throw new Error('member.json not found');
-    memberList = await res.json();
-    return memberList;
-  } catch(e){
-    console.error(e);
-    memberList = null;
-    return null;
-  }
+    memberList=await res.json(); return memberList;
+  }catch(e){ console.error(e); memberList=null; return null; }
 }
+function normalizeName(s){ return (s||'').trim().replace(/\s+/g,' ').toLowerCase(); }
 
-// helpers
-function normalize(s){ return (s||'').trim().replace(/\s+/g,' ').toLowerCase(); }
-function normalizeId(s){ return (s||'').trim().toLowerCase(); }
+let currentMember=null;
 
-// find member by id OR name
-function findMember(query){
-  if(!memberList) return null;
-  const q = query.trim();
-  if(!q) return null;
+document.getElementById('genBtn').addEventListener('click',async()=>{
+  document.getElementById('msg').innerText='';
+  document.getElementById('thank').innerText='';
+  document.getElementById('downloadBtn').style.display='none';
 
-  // 1. Try exact id match (case-insensitive)
-  const byId = memberList.find(m => m.id && normalizeId(m.id) === normalizeId(q));
-  if(byId) return byId;
+  const nameInput=document.getElementById('memberName').value;
+  if(!nameInput.trim()){ document.getElementById('msg').innerText='Please enter member name.'; return; }
 
-  // 2. Try exact name match (case-insensitive)
-  const byName = memberList.find(m => m.name && normalize(m.name) === normalize(q));
-  if(byName) return byName;
+  const members=await loadMembersOnce();
+  if(!members){ document.getElementById('msg').innerText='member.json missing or failed to load.'; return; }
 
-  // 3. As fallback, try partial name contains (helps if user typed partial)
-  const partial = memberList.find(m => m.name && normalize(m.name).includes(normalize(q)));
-  if(partial) return partial;
-
-  return null;
-}
-
-document.getElementById('genBtn').addEventListener('click', async ()=>{
-  document.getElementById('msg').innerText = '';
-  document.getElementById('thank').innerText = '';
-  document.getElementById('downloadBtn').style.display = 'none';
-  currentMember = null;
-
-  const input = document.getElementById('memberInput').value || '';
-  if(!input.trim()){ document.getElementById('msg').innerText = 'Please enter Member ID or Name.'; return; }
-
-  const members = await loadMembersOnce();
-  if(!members){ document.getElementById('msg').innerText = 'member.json missing or failed to load.'; return; }
-
-  const found = findMember(input);
+  const found=members.find(m=>normalizeName(m.name)===normalizeName(nameInput));
   if(!found){
-    document.getElementById('msg').innerText = `No record found for "${input}". Certificate allowed only for registered members.`;
-    document.getElementById('certificate').style.display = 'none';
+    document.getElementById('msg').innerText=`No record found for "${nameInput}". Certificate allowed only for registered members.`;
+    document.getElementById('certificate').style.display='none';
     return;
   }
 
-  // success
-  currentMember = found;
-  const cert = document.getElementById('certificate');
-  cert.style.display = 'block';
-  document.getElementById('certName').innerText = found.name || found.id;
+  // Show certificate
+  currentMember=found;
+  const cert=document.getElementById('certificate');
+  cert.style.display='block';
+  document.getElementById('certName').innerText=found.name;
 
-  // generate QR (prefer id param)
-  const qrDiv = document.getElementById('qrCode');
-  qrDiv.innerHTML = '';
-  const param = found.id ? `id=${encodeURIComponent(found.id)}` : `name=${encodeURIComponent(found.name)}`;
-  const verifyURL = `https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/verify.html?${param}`;
-  new QRCode(qrDiv, { text: verifyURL, width: 100, height: 100 });
+  const qrDiv=document.getElementById('qrCode');
+  qrDiv.innerHTML='';
+  const idOrName=found.id?`id=${encodeURIComponent(found.id)}`:`name=${encodeURIComponent(found.name)}`;
+  const verifyURL=`https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/verify.html?${idOrName}`;
+  new QRCode(qrDiv,{text:verifyURL,width:100,height:100});
 
-  document.getElementById('thank').innerText = 'Thank you for supporting us ❤️';
-  document.getElementById('downloadBtn').style.display = 'inline-block';
+  document.getElementById('thank').innerText='Thank you for supporting us ❤️';
+  document.getElementById('downloadBtn').style.display='inline-block';
 });
 
-// download button
-document.getElementById('downloadBtn').addEventListener('click', async ()=>{
+document.getElementById('downloadBtn').addEventListener('click',async()=>{
   if(!currentMember){ alert('Please generate a certificate first.'); return; }
-  const cert = document.getElementById('certificate');
+  const cert=document.getElementById('certificate');
   try{
-    const canvas = await html2canvas(cert, { scale: 2, useCORS: true });
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jspdf.jsPDF('l','mm','a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    const filename = (currentMember.name || currentMember.id || 'certificate').replace(/\s+/g,'_');
-    pdf.save(`${filename}_Certificate.pdf`);
-  } catch(err){
-    console.error(err);
-    alert('PDF generation failed. Check console for details.');
-  }
+    const canvas=await html2canvas(cert,{scale:2,useCORS:true});
+    const imgData=canvas.toDataURL('image/png');
+    const pdf=new jspdf.jsPDF('l','mm','a4');
+    const pdfWidth=pdf.internal.pageSize.getWidth();
+    const pdfHeight=(canvas.height*pdfWidth)/canvas.width;
+    pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
+    pdf.save(`${currentMember.name.replace(/\s+/g,'_')}_Certificate.pdf`);
+  }catch(err){ console.error(err); alert('PDF generation failed.'); }
 });
 </script>
 </body>
