@@ -1,98 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificate | Paws and Smile Foundation</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background: #f2f2f2;
-      font-family: 'Poppins', sans-serif;
-    }
-    .certificate-container {
-      position: relative;
-      display: inline-block;
-    }
-    .certificate-bg {
-      width: 100%;
-      max-width: 1000px;
-      display: block;
-    }
-    .name {
-      position: absolute;
-      top: 37%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 48px;
-      font-weight: 700;
-      color: #d4af37; /* Golden */
-      text-transform: capitalize;
-    }
-    .qr {
-      position: absolute;
-      bottom: 23%;
-      left: 48%;
-      transform: translateX(-50%);
-    }
-    #downloadBtn {
-      margin-top: 20px;
-      padding: 12px 25px;
-      background-color: #d4af37;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Generator | Paws and Smile Foundation</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  background: #f7f7f7;
+}
+.container {
+  margin-top: 20px;
+}
+#certificate {
+  position: relative;
+  width: 1000px;
+  height: 700px;
+  margin: 20px auto;
+  background: url('assets/image/certificate.jpg') no-repeat center center/cover;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+.name {
+  position: absolute;
+  top: 330px; /* Adjust line height according to your certificate */
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #3b2b1c;
+}
+.qr-box {
+  position: absolute;
+  bottom: 150px; /* Adjust according to golden box position */
+  right: 110px; /* adjust according to box alignment */
+  width: 120px;
+  height: 120px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid gold;
+}
+.thankyou {
+  margin-top: 30px;
+  font-size: 20px;
+  color: #444;
+}
+input {
+  padding: 10px;
+  margin-top: 20px;
+  width: 250px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+}
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin-top: 10px;
+  background: #b8753f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background: #9a5f2e;
+}
+</style>
 </head>
 <body>
-  <div id="certificate" class="certificate-container">
-    <img src="assets/images/certificate-bg.jpg.jpeg" alt="Certificate Background" class="certificate-bg">
-    <div class="name" id="memberName"></div>
-    <div class="qr" id="qrcode"></div>
+
+<div class="container">
+  <h2>Volunteer Certificate Generator</h2>
+  <input type="text" id="memberName" placeholder="Enter Member Name">
+  <button onclick="generateCertificate()">Generate Certificate</button>
+
+  <div id="certificate" style="display:none;">
+    <div class="name" id="certName"></div>
+    <div class="qr-box" id="qrCode"></div>
   </div>
 
-  <button id="downloadBtn">Download as PDF</button>
+  <div id="thankyou" class="thankyou"></div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function generateCertificate() {
+  const name = document.getElementById("memberName").value.trim();
+  if (!name) {
+    alert("Please enter member name!");
+    return;
+  }
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const memberId = urlParams.get('id');
+  document.getElementById("certificate").style.display = "block";
+  document.getElementById("certName").innerText = name;
 
-    fetch('members.json')
-      .then(res => res.json())
-      .then(data => {
-        const member = data.find(m => m.id === memberId);
-        if (!member) {
-          document.body.innerHTML = "<h2>No record found for this ID</h2>";
-          return;
-        }
+  // Generate QR
+  document.getElementById("qrCode").innerHTML = "";
+  const qrURL = `https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/verify.html?name=${encodeURIComponent(name)}`;
+  new QRCode(document.getElementById("qrCode"), {
+    text: qrURL,
+    width: 100,
+    height: 100
+  });
 
-        document.getElementById("memberName").textContent = member.name;
+  // Create PDF
+  await new Promise(resolve => setTimeout(resolve, 1000)); // wait for QR render
+  html2canvas(document.getElementById("certificate")).then(canvas => {
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
+    const width = pdf.internal.pageSize.getWidth();
+    const height = (canvas.height * width) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+    pdf.save(`${name}_Certificate.pdf`);
+  });
 
-        new QRCode(document.getElementById("qrcode"), {
-          text: `https://pawsandsmilefoundation-jpg.github.io/Paws-Smile-Foundation/verify.html?id=${member.id}`,
-          width: 100,
-          height: 100
-        });
-
-        document.getElementById("downloadBtn").addEventListener("click", async () => {
-          const canvas = await html2canvas(document.getElementById("certificate"));
-          const imgData = canvas.toDataURL("image/jpeg", 1.0);
-          const pdf = new jspdf.jsPDF("l", "mm", "a4");
-          const imgWidth = 297;
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
-          pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-          pdf.save(`${member.name}-Certificate.pdf`);
-        });
-      });
-  </script>
+  document.getElementById("thankyou").innerText = "Thank you for supporting us!";
+}
+</script>
 </body>
 </html>
