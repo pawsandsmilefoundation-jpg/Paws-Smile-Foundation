@@ -21,7 +21,7 @@
 <script>
 async function loadMembers(){
   try{
-    const res = await fetch('member.json', { cache: 'no-store' });
+    const res = await fetch('members.json', { cache: 'no-store' });
     if(!res.ok) throw new Error('member.json not found');
     return await res.json();
   }catch(e){
