@@ -1,26 +1,14 @@
 [
   {
     "id": "PSF001",
-    "name": "Riya Sharma",
-    "role": "Volunteer",
-    "joined": "2025-01-10",
-    "project": "Animal Rescue Drive",
-    "photo": "assets/members/riya.jpg"
+    "name": "Riya Sharma"
   },
   {
     "id": "PSF002",
-    "name": "Amit Kumar",
-    "role": "Coordinator",
-    "joined": "2025-03-15",
-    "project": "Street Dog Feeding",
-    "photo": "assets/members/amit.jpg"
+    "name": "Arjun Mehta"
   },
   {
     "id": "PSF003",
-    "name": "Priya Verma",
-    "role": "Volunteer",
-    "joined": "2025-06-05",
-    "project": "Vaccination Campaign",
-    "photo": "assets/members/priya.jpg"
+    "name": "Sneha Verma"
   }
 ]
