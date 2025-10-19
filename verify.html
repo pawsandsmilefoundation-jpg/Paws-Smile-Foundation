@@ -21,8 +21,8 @@
 <script>
 async function loadMembers(){
   try{
-    const res = await fetch('member.json', { cache: 'no-store' });
-    if(!res.ok) throw new Error('member.json not found');
+    const res = await fetch('members.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('members.json not found');
     return await res.json();
   }catch(e){
     console.error(e);
@@ -55,7 +55,7 @@ async function showVerification(){
 
   if(member){
     // build card
-    const photo = member.photo ? `<img src="${member.photo}" alt="${member.name}">` : '';
+    const photo = members.photo ? `<img src="${members.photo}" alt="${members.name}">` : '';
     resultDiv.innerHTML = `
       <div class="card">
         <div style="text-align:center">${photo}</div>
